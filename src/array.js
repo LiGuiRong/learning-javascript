@@ -18,3 +18,22 @@ export function flatten(arr) {
     }
     return res;
 }
+
+/**
+ * 从index开始，删除指定len长度的数组中的元素，
+ * 返回被删除后的原数组
+ * @param {Array} arr 
+ * @param {Number} index 
+ * @param {Number} len 
+ */
+export function deleteElement (arr, index, len) {
+    let res = [];
+    for (let i = 0; i < arr.length; i++) {
+        if (i === index) {
+            i = index + len -1;
+            continue;
+        }
+        res.push(arr[i]);
+    }
+    return res;
+}

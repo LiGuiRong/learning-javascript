@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <script src="../performance/catchError.js"></script>
+        <script src="../performance/performance.js"></script>
+        <script>
+            detectError(); // 错误检测
+            pagePerformance(); // 页面性能检测
+        </script>
+    </head>
+<body>
+    <p>这是一些文字</p>
+</body>
+
+<script type="text/javascript"> 
+    // document.body.oncopy = e => {
+    //     let clipboardData = (e.clipboardData || window.clipboardData);
+    //     console.log('要粘贴的内容：', clipboardData.getData('text'));
+    // }
+    // document.body.oncopy = e => {
+    //     console.log('被复制的数据：', window.getSelection(0).toString());
+    // }
+    document.body.oncopy = event => {
+        event.preventDefault();
+        let textFont, copyFont = window.getSelection(0).toString();
+        if (copyFont.length > 4) {
+            textFont = '内容：' + copyFont + '\n' + 
+                        '作者：niacal\n' + 
+                        '来源：' + window.location.href + '\n' + 
+                        '著作权归作者所有';
+        } else {
+            textFont = copyFont;
+        }
+        if (event.clipboardData) {
+            return event.clipboardData.setData('text', textFont);
+        } else {
+            // 兼容IE
+            return window.clipboardData.setData('text', textFont);
+        }
+    }
+    function say2(){
+        console.log(a);
+    }
+    say2();
+    say();
+</script>
+</html>

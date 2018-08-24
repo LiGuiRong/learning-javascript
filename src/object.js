@@ -29,3 +29,23 @@ export function deepCopy(obj) {
     }
     return res;
 }
+
+/**
+ * 对象继承
+ * @param {Function | Object} obj 
+ */
+export function inherit(obj) {
+    if (obj === null) {
+        throw TypeError();
+    }
+    if (Object.create) {
+        return Object.create(obj);
+    }
+    let type = typeof obj;
+    if (type !== 'function' && type !== 'object') {
+        throw TypeError();
+    }
+    function f() {};    // 定义一个空构造函数
+    f.prototype = obj;  // 将其原型设置为obj
+    return new f();     // 使用f()创建obj的继承对象
+}
