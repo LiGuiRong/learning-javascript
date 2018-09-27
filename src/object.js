@@ -18,19 +18,6 @@ export function deepCopy(obj) {
     return res;
 }
 
-/**
- * 对象浅复制
- * @param {object} obj 
- */
-export function shadowCopy(obj) {
-    let res = Array.isArray(obj) ? [] : {};
-    for (let key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            res[key] = obj[key];
-        }
-    }
-    return res;
-}
 
 /**
  * 对象继承
@@ -83,4 +70,18 @@ export function flatten (obj) {
     }
     excute(obj, '');
     return result;
+}
+
+/**
+ * 对象浅复制
+ * @param {object} obj 
+ */
+export function shadowCopy(obj) {
+    let res = Array.isArray(obj) ? [] : {};
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            res[key] = obj[key];
+        }
+    }
+    return res;
 }
