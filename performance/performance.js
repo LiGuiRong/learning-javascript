@@ -28,13 +28,13 @@
         return timeObj;
     }
     // 页面各个资源信息
-    function pageResource(resource) {
+    function pageResources(resource) {
         let resArray = []
         resource.forEach(el => {
             let item = {
-                name: el.name, // 文件地址
+                url: el.name, // 文件地址
                 type: el.initiatorType, // 文件类型
-                reqTime: (el.responseEnd - el.requestStart) || 0 // 请求该资源HTTP总耗时
+                time: ((el.responseEnd - el.startTime) || el.duration || 0) + 'ms' // 请求该资源HTTP总耗时
             }
             resArray.push(item);
         });
@@ -57,6 +57,17 @@
             return '无法判断页面的加载方式，请检查入参是否为以下值：0，1，2，255';
         }
     }
+    // 当前页面是否存在栈溢出
+    function isStackOverflow () {
+        let pm = window.performance.memory;
+        let totalHeapSize= pm.totalJSHeapSize;
+        let curHeapSize = pm.usedJSHeapSize;
+        if (curHeapSize > totalHeapSize) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     function uploadPagePerformance (config) {
         // 将页面性能信息上报
         console.log(config);
@@ -67,11 +78,14 @@
             let type = performance.navigation.type;
             let resource = performance.getEntries();
             pageTiming(timing);
-            pageResource(resource);
+            pageResources(resource);
             pageLoadMethod(type);
             uploadPagePerformance(config);
         }, 0)
     }
-    // 对外暴露单一接口：pagePerformance
-    global.pagePerformance = _pageInit;
+    // 对外暴露单一接口：pagePerformance，isStackOverflow
+    global.pageAllPerformance = _pageInit;
+    global.pagePerformance = pageTiming;
+    global.pageResources = pageResources;
+    global.isStackOverflow = isStackOverflow;
 })(window);

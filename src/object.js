@@ -1,3 +1,4 @@
+import { checkType } from './utils';
 /**
  * 对象浅复制
  * @param {object} obj 
@@ -49,3 +50,36 @@ export function inherit(obj) {
     f.prototype = obj;  // 将其原型设置为obj
     return new f();     // 使用f()创建obj的继承对象
 }
+
+/**
+ * 对象扁平化
+ * @param {Object} obj 
+ */
+export function flatten (obj) {
+    let result = {};
+    function excute(src, prop) {
+        let type = typeof src;
+        if (type === 'object') {
+            let isEmpty = true;
+            for (let p in src) {
+                isEmpty = false;
+                excute(src[p], prop ? prop + '.' + p : p)
+            }
+            if (isEmpty && prop) {
+                result[prop] = {};
+            }
+        } else if(type === 'Array') {
+            if (src.length > 0) {
+                src.forEach((item, index) => {
+                    excute(item, prop ? prop + '.[' + index + ']' : index);
+                })
+            } else {
+                result[prop] = [];
+            }
+        } else {
+            result[prop] = src;
+        }
+    }
+    excute(obj, '');
+    return result;
+} 
