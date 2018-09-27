@@ -1,17 +1,4 @@
 import { checkType } from './utils';
-/**
- * 对象浅复制
- * @param {object} obj 
- */
-export function shadowCopy(obj) {
-    let res = Array.isArray(obj) ? [] : {};
-    for (let key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            res[key] = obj[key];
-        }
-    }
-    return res;
-}
 
 /**
  * 对象深复制
@@ -83,3 +70,17 @@ export function flatten (obj) {
     excute(obj, '');
     return result;
 } 
+
+/**
+ * 对象浅复制
+ * @param {object} obj 
+ */
+export function shadowCopy(obj) {
+    let res = Array.isArray(obj) ? [] : {};
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            res[key] = obj[key];
+        }
+    }
+    return res;
+}
