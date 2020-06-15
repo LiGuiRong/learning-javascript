@@ -1,7 +1,10 @@
-### 前言
+# 前言
 继承是实现代码可复用的重要手段
 
-### 原型链继承
+## 原型链继承
+
+- 核心： 将父类的实例作为子类的原型
+
 - 构造函数、原型和实例之间的关系：**每个构造函数都有一个原型对象，原型对象都包含一个指向构造函数的指针，而实例都包含原型对象的一个指针。**
 
 ```js
@@ -18,6 +21,7 @@ function SubType() {
 }
 
 // 创建父类的实例，并将子类的原型对象指向该实例
+// 将父类的实例作为子类的原型
 SubType.prototype = new SuperType();
 
 // 创建子类的实例，此时，实例instance就继承了父类的方法了
@@ -49,8 +53,12 @@ console.log(instance2.colors); // (4) ["red", "green", "blue", "pink"]
 // 引用类型值的修改会导致所有实例的值都被同步篡改了
 ```
 
-### 借用构造函数继承
+## 借用构造函数继承
+
 该方法的核心是**在创建子类实例的时候调用父类构造函数用来实现继承**
+
+使用父类的构造函数来增强子类的实例，等于是复制父类的属性给子类
+
 ```js
 function SuperType() {
     this.colors = ['red', 'green', 'blue'];
@@ -80,8 +88,10 @@ instance2.showColors(); // instance2.showColors is not a function
 - 只能继承父类实例上的方法和属性，不能继承父类原型链上的方法和实例
 - 无法实现复用，每个子类都有父类的实例函数的副本，影响性能
 
-### 组合继承
+## 组合继承
+
 综合原型链和构造函数继续方法，实现组合继承
+
 ```js
 function SuperType(name) {
     this.name = namel
@@ -116,7 +126,8 @@ instance2.showColors();
 instance2.getAge();
 ```
 
-### 原型式继承
+## 原型式继承
+
 利用一个空对象作为中介，将某个对象直接赋值给空对象构造函数的原型
 
 1、使用Object.create实现继承
@@ -134,8 +145,10 @@ function inherit(obj) {
 2、存在属性篡改的可能
 
 
-### 寄生式继承
+## 寄生式继承
+
 返回一个增强的构造函数
+
 ```js
 function createAnthor(origion) {
     // 创建新对象
@@ -150,8 +163,10 @@ function createAnthor(origion) {
 ```
 函数的主要作用是为构造函数新增属性和方法，以增强对象
 
-### 寄生混组合式继承
+## 寄生混组合式继承
+
 结合借用构造函数和寄生式继承实现继承
+
 ```js
 function inheritPrototype(subType, superType){
   var prototype = Object.create(superType.prototype); // 创建对象，创建父类原型的一个副本
@@ -190,7 +205,8 @@ instance1.colors.push("2"); // ["red", "blue", "green", "2"]
 instance1.colors.push("3"); // ["red", "blue", "green", "3"]
 ```
 
-### 混入方式继承
+## 混入方式继承
+
 Object.assign将一个对象的原型拷贝到另一个对象的原型上实现继承
 
 ```js
@@ -218,7 +234,8 @@ class Child extends Parent{
 }
 ```
 
-### _inherit
+## _inherit
+
 ```js
 function _inherit(subType, superType) {
     // 增强对象，弥补因重写原型而失去的默认的constructor 属性
@@ -237,5 +254,8 @@ function _inherit(subType, superType) {
 }
 ```
 
-### 参考链接
+## 参考链接
 [参考](https://juejin.im/post/5bcb2e295188255c55472db0)
+
+
+## es6的extends继承

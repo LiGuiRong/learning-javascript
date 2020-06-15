@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .wrap {
+      width: 300px;
+      height: 500px;
+      overflow: scroll;
+      margin: 0;
+      background: #b0b0b0;
+    }
+    .container{
+      padding: 10px;
+      border: 10px solid #333;
+      width: 340px;
+      height: 1290px;
+      margin: 20px;
+      background-color:aquamarine;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="container"></div>
+  </div>
+  <script>
+    /**
+    * clientHeight = height + padding
+    * offsetHeight = height + padding + border-height + scroll-bar-height
+    * scrollHeight = container内部的总高度，包括height + padding + margin + border-height
+    */
+    let el = document.querySelector('.wrap')
+    console.log('el.clientHeight', el.clientHeight)
+    console.log('el.clientWidth', el.clientWidth)
+    console.log('el.offsetHeight', el.offsetHeight)
+    console.log('el.offsetWidth', el.offsetWidth)
+    console.log('el.scrollHeight', el.scrollHeight)
+    console.log('el.scrollTop', el.scrollTop)
+    let container = document.querySelector('.container')
+    container.addEventListener('click', function(even) {
+      console.log('even.clientY, even.pageY, even.offsetY', even.clientY, even.pageY, even.offsetY);
+    }, false)
+  </script>
+</body>
+</html>
