@@ -36,3 +36,13 @@ function getUrlParamsObj() {
   })
   return params
 }
+
+function toThousandMark(strNum, fixed) {
+  let patten = /(\d{1,3})(?=(\d{3})+$)/g
+  let [integer, decimal] = strNum.split('.')
+  return decimal ? `${integer.replace(patten, '$1,')}.${decimal}` : integer.replace(patten, '$1,')
+}
+
+let result = toThousandMark('124567.12345')
+
+console.log(result)
